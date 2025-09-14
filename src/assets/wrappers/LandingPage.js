@@ -9,6 +9,9 @@ const Wrapper = styled.section`
     display: flex;
     align-items: center;
   }
+  .logo{
+    margin-top="10rem";
+  }
   .page {
     min-height: calc(100vh - var(--nav-height));
     display: grid;
@@ -18,7 +21,7 @@ const Wrapper = styled.section`
   h1 {
     font-weight: 700;
     span {
-      color: var(--primary-500);
+      color: #DEA2AC
     }
     margin-bottom: 1.5rem;
   }
@@ -36,6 +39,7 @@ const Wrapper = styled.section`
   }
   .btn {
     padding: 0.75rem 1rem;
+      background: #DEA2AC
   }
   @media (min-width: 992px) {
     .page {
