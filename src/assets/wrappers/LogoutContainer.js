@@ -7,6 +7,7 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     gap: 0 0.5rem;
+    background: #DEA2AC;
   }
   .img {
     width: 25px;
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
     text-align: center;
     visibility: hidden;
     border-radius: var(--border-radius);
-    background: var(--primary-500);
+    background: #DEA2AC;
   }
   .show-dropdown {
     visibility: visible;

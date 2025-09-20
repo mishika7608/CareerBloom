@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         children:[
           {
-            index:false,
+            index:true,
             element: <AddJob />
           },
           {

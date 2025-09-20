@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.aside`
-  @media  {
+  @media (min-width: 992px) {
+      display: none;
     
   }
   .sidebar-container {
-    header{
-      display: block;
-    }
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.7);
@@ -61,14 +59,26 @@ const Wrapper = styled.aside`
   .nav-link:hover {
     color: #DEA2AC;
   }
+  .nav-link:hover .icon{
+    color: #DEA2AC;
+  } 
   .icon {
     font-size: 1.5rem;
     margin-right: 1rem;
     display: grid;
     place-items: center;
+    transition: var(--transition)
   }
   .active {
-    color: var(--primary-500);
+    color: #DEA2AC;
   }
+  .active .icon{
+    color: #DEA2AC;
+  }
+  // @media (min-width: 992px) {
+  // .sidebar-container {
+  //   display: none; /* hide overlay sidebar on desktop */
+  // }
+}
 `;
 export default Wrapper;
