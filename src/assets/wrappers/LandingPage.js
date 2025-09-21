@@ -10,7 +10,8 @@ const Wrapper = styled.section`
     align-items: center;
   }
   .logo{
-    margin-top="10rem";
+    padding-top: 2rem;
+    margin-top= 1rem;
   }
   .page {
     min-height: calc(100vh - var(--nav-height));
