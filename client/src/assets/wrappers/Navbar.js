@@ -1,0 +1,57 @@
+import styled from 'styled-components';
+
+const Wrapper = styled.nav`
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
+  background: var(--background-secondary-color);
+  .logo{
+    background: transparent;
+    border-color: transparent;
+    display: flex;
+    align-items: center;
+    width: 100px;
+  }
+  .nav-center {
+    display: flex;
+    width: 90vw;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .toggle-btn {
+    background: transparent;
+    border-color: transparent;
+    font-size: 1.75rem;
+    color: #DEA2AC;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .btn-container {
+    display: flex;
+    align-items: center;
+  }
+  .logo-text {
+    display: none;
+  }
+  @media (min-width: 992px) {
+    position: sticky;
+    top: 0;
+
+    .nav-center {
+      width: 90%;
+    }
+    .logo-text {
+      display: block;
+    }
+    
+    .logo {
+      background: transparent;
+      border-color: transparent;
+      display: none;
+    }
+  }
+`;
+export default Wrapper;
