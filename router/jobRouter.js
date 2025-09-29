@@ -6,7 +6,7 @@ import {
     updateJob,
     deleteJob, } 
     from '../controllers/jobController.js'
-import { validateJobInput } from '../middleware/validationMiddleware.js'
+import { validateIdParam , validateJobInput } from '../middleware/validationMiddleware.js'
 
 const router = Router()
 //APPROACH 1
@@ -17,6 +17,6 @@ const router = Router()
 // chaining the methods as they use same url : base param
 router.route('/').get(getAllJobs).post(validateJobInput,createJob)
 // for rest of the edit, del... : route param 
-router.route('/:id').get(getJob).patch(validateJobInput, updateJob).delete(deleteJob)
+router.route('/:id').get(validateIdParam , getJob).patch(validateIdParam , validateJobInput, updateJob).delete(validateIdParam, deleteJob)
 
 export default router;

@@ -5,28 +5,10 @@ import express from 'express';
 const app = express();
 import mongoose from 'mongoose';
 import jobRouter from './router/jobRouter.js';      // routers
+import authRouter from './router/authRouter.js';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';    //middleware
 import morgan from 'morgan';
 
-
-// let jobs = [
-//     {id: nanoid(), company: 'apple', position:'front-end'},
-//     {id: nanoid(), company: 'google', position:'back-end'},
-// ];
-
-//Async await
-// try{
-//     const response = await fetch('http://www.course-api.com/react-useReducer-cart-project');
-//     const cartData = await response.json();
-//     console.log(cartData);
-// } catch(error){
-//     console.log(error)
-// }
-
-// // fetching fromthe API and promise
-// fetch('http://www.course-api.com/react-useReducer-cart-project')
-// .then( res => res.json())
-// .then(data => console.log(data));
 
 // Wrap the middleware in the condition
 if (process.env.NODE_ENV === 'development'){
@@ -39,13 +21,14 @@ app.use(express.json());
 app.get('/',(req,res)=>{
     res.send('Hello World');
 });
-
+app.use('/api/v1/jobs', jobRouter);  
+app.use('/api/v1/auth', authRouter);
 
 
 // GET ALL JOBS
 
 // starting poin for all the request
-app.get('/api/v1/jobs'); // , (req,res) => {
+// app.get('/api/v1/jobs'); // , (req,res) => {
     // indicates evrything went smoothly
     // res.status(200).json({ jobs })
 // })
@@ -84,17 +67,7 @@ const startServer = async() => {
         process.exit(1);
     }
 }
-startServer(
-
-
-
-
-
-
-
-
-    
-);
+startServer();
 // EXPRESS does this
 // app.use('*', (req, res) => {
 //     res.status(404).json({msg: `not found`})
