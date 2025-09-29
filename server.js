@@ -4,12 +4,10 @@ dotenv.config();
 import express from 'express';
 const app = express();
 import mongoose from 'mongoose';
-import jobRouter from './router/jobRouter.js';
+import jobRouter from './router/jobRouter.js';      // routers
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';    //middleware
 import morgan from 'morgan';
-// import mongoose from 'mongoose';
 
-
-// routers
 
 // let jobs = [
 //     {id: nanoid(), company: 'apple', position:'front-end'},
@@ -41,10 +39,8 @@ app.use(express.json());
 app.get('/',(req,res)=>{
     res.send('Hello World');
 });
-app.post('/',(req, res)=>{
-    console.log(req);
-    res.json({message: 'data recieved', data: req.body });
-})
+
+
 
 // GET ALL JOBS
 
@@ -69,10 +65,7 @@ app.post('/api/v1/jobs');
 
 app.use('/api/v1/jobs' , jobRouter);
 
-app.use((err , req,res, next) => {
-    console.log(err);
-    res.status(500).json({msg: 'Something went wrong'});
-})
+app.use(errorHandlerMiddleware)
 
 // port that would be given later by platform || hardcoded port
 const port = process.env.PORT || 5100;
