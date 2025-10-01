@@ -8,6 +8,7 @@ let jobs=[
 
 export const getAllJobs = async(req, res) => {
     // const jobs = await Job.find({company:'apple'})      //Specific company
+    console.log(req.user);
     const jobs = await Job.find({})
     res.status(StatusCodes.OK).json({ jobs })
 }

@@ -8,7 +8,9 @@ import jobRouter from './router/jobRouter.js';      // routers
 import authRouter from './router/authRouter.js';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';    //middleware
 import morgan from 'morgan';
-
+import {authenticateUser} from './middleware/authMiddleware.js';
+import cookieParser from 'cookie-parser';
+app.use(cookieParser());
 
 // Wrap the middleware in the condition
 if (process.env.NODE_ENV === 'development'){
@@ -21,7 +23,7 @@ app.use(express.json());
 app.get('/',(req,res)=>{
     res.send('Hello World');
 });
-app.use('/api/v1/jobs', jobRouter);  
+app.use('/api/v1/jobs', authenticateUser, jobRouter);  
 app.use('/api/v1/auth', authRouter);
 
 
