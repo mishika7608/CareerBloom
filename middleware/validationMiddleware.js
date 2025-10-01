@@ -54,6 +54,17 @@ export const validateRegisterInput  = withValidationErrors([
     body('lastName').notEmpty().withMessage('last name is required'),
 ])
 
+export const validateLoginInput  = withValidationErrors([
+    body('email')
+        .notEmpty()
+        .withMessage('email is required')
+        .isEmail()
+        .withMessage('Not a valid email'),
+    body('password')
+    .notEmpty()
+    .withMessage('password is required'),
+    
+])
 
 // export const validateIdParam = withValidationErrors([
 //     param('id')
