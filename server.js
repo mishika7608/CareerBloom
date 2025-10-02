@@ -6,6 +6,7 @@ const app = express();
 import mongoose from 'mongoose';
 import jobRouter from './router/jobRouter.js';      // routers
 import authRouter from './router/authRouter.js';
+import userRouter from './router/userRouter.js'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';    //middleware
 import morgan from 'morgan';
 import {authenticateUser} from './middleware/authMiddleware.js';
@@ -25,15 +26,8 @@ app.get('/',(req,res)=>{
 });
 app.use('/api/v1/jobs', authenticateUser, jobRouter);  
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
 
-
-// GET ALL JOBS
-
-// starting poin for all the request
-// app.get('/api/v1/jobs'); // , (req,res) => {
-    // indicates evrything went smoothly
-    // res.status(200).json({ jobs })
-// })
 
 // GET SINGLE JOB
 // :id = route parameter
@@ -70,14 +64,3 @@ const startServer = async() => {
     }
 }
 startServer();
-// EXPRESS does this
-// app.use('*', (req, res) => {
-//     res.status(404).json({msg: `not found`})
-// });
-
-
-
-// app.listen(port , () => {
-//     console.log('server running on PORT ${port}...');
-// })
-
