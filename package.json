@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "setup-project": "npm i && cd client && npm i",
-    "dev": "nodemon server.js",
-    "watch": "node --watch server.js"
+    "server": "nodemon server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
