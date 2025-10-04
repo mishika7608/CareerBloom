@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'development'){
 
 app.use(express.json());
 
-app.get('/',(req,res)=>{
+app.get('/v1/test',(req,res)=>{
     res.send('Hello World');
 });
 app.use('/api/v1/jobs', authenticateUser, jobRouter);  
@@ -41,8 +41,6 @@ app.delete('/api/v1/jobs/:id');
 
 //  CREATE JOB
 app.post('/api/v1/jobs');
-
-app.use('/api/v1/jobs' , jobRouter);
 
 app.use(errorHandlerMiddleware)
 
