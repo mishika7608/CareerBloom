@@ -11,7 +11,7 @@ import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';    
 import morgan from 'morgan';
 import {authenticateUser} from './middleware/authMiddleware.js';
 import cookieParser from 'cookie-parser';
-app.use(cookieParser());
+
 
 // Wrap the middleware in the condition
 if (process.env.NODE_ENV === 'development'){
@@ -20,10 +20,18 @@ if (process.env.NODE_ENV === 'development'){
 }
 
 app.use(express.json());
-
-app.get('/v1/test',(req,res)=>{
+app.use(cookieParser());
+app.get('/',(req,res)=>{
     res.send('Hello World');
 });
+// app.get('/api/v1/test',(req,res)=>{
+//     res.send('test route');
+// });
+
+app.get('/v1/test', (req, res) => res.send('Hello World'));
+
+
+
 app.use('/api/v1/jobs', authenticateUser, jobRouter);  
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
