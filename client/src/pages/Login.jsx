@@ -13,10 +13,10 @@ export const action = async ({ request }) => {
     return errors;
   }
   try{
-    await customFetch.post('v1/auth/login',data)
+    await customFetch.post('/v1/auth/login',data)
     return redirect('/dashboard');
   } catch(error){
-    errors.msg = error?.response?.data?.msg;
+    // errors.msg = error?.response?.data?.msg;
     console.log(error)
     return errors;
   }

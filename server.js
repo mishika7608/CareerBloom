@@ -28,7 +28,7 @@ app.get('/',(req,res)=>{
 //     res.send('test route');
 // });
 
-app.get('/v1/test', (req, res) => res.send('Hello World'));
+app.get('/api/v1/test', (req, res) => res.send('Hello World'));
 
 
 

@@ -26,6 +26,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5100', // your backend
         changeOrigin: true,
+        secure: false,
         // remove rewrite, keep /api in path
       },
     },
