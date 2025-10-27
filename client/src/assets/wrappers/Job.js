@@ -18,7 +18,7 @@ const Wrapper = styled.article`
     height: 60px;
     display: grid;
     place-items: center;
-    background: var(--primary-500);
+    background: #DEA2AC;
     border-radius: var(--border-radius);
     font-size: 1.5rem;
     font-weight: 700;
@@ -72,6 +72,7 @@ const Wrapper = styled.article`
     font-size: 0.85rem;
     display: flex;
     align-items: center;
+    background: #DEA2AC;
   }
   .edit-btn {
     margin-right: 0.5rem;
