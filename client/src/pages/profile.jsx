@@ -1,4 +1,4 @@
-import { FormRow, SubmitBtn } from '../components';
+import { FormRow, SubmitBTn } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useOutletContext, redirect } from 'react-router-dom';
 import { Form } from 'react-router-dom';
@@ -56,7 +56,7 @@ const Profile = () => {
           />
           <FormRow type='email' name='email' defaultValue={email} />
           <FormRow type='text' name='location' defaultValue={location} />
-          <SubmitBtn formBtn />
+          <SubmitBTn formBtn />
         </div>
       </Form>
     </Wrapper>

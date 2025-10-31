@@ -55,7 +55,7 @@ export const action = async ({ request }) => {
 
   try {
     // ✅ Only include backend path after /api
-    await customFetch.post('/v1/auth/register', data);
+    await customFetch.post('/auth/register', data);
     return redirect('/login');
   } catch (error) {
     console.error(error);

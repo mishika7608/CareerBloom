@@ -1,4 +1,4 @@
-import { FormRow, FormRowSelect, SubmitBtn } from '../components';
+import { FormRow, FormRowSelect, SubmitBTn } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useLoaderData, useParams } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
@@ -77,7 +77,7 @@ const EditJob = () => {
             defaultValue={job.jobType}
             list={Object.values(JOB_TYPE)}
           />
-          <SubmitBtn formBtn />
+          <SubmitBTn formBtn />
         </div>
       </Form>
     </Wrapper>

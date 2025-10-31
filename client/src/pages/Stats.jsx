@@ -1,4 +1,4 @@
-import { ChartsContainer, StatsContainer } from '../components';
+import { ChartContainer, StatContainer } from '../components';
 import customFetch from '../utils/customFetch';
 import { useLoaderData } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -22,9 +22,9 @@ const Stats = () => {
 
   return (
     <>
-      <StatsContainer defaultStats={defaultStats} />
+      <StatContainer defaultStats={defaultStats} />
       {monthlyApplications?.length > 1 && (
-        <ChartsContainer data={monthlyApplications} />
+        <ChartContainer data={monthlyApplications} />
       )}
     </>
   );

@@ -1,11 +1,13 @@
 import { Outlet, redirect, useNavigate, useNavigation } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Dashboard';
-import { BigSidebar, Navbar, SmallSidebar, Loading } from '../components';
+import {  NavBar, Load } from '../components';
 import { createContext, useContext, useEffect, useState } from 'react';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 import { checkDefaultTheme } from '../App';
+import {BigSideBar, SmallSideBar} from '../components';
+
 const userQuery = {
   queryKey: ['user'],
   queryFn: async () => {
@@ -25,7 +27,8 @@ export const loader = (queryClient) => async () => {
 const DashboardContext = createContext();
 
 const DashboardLayout = ({ queryClient }) => {
-  const { user } = useQuery(userQuery).data;
+  const { data } = useQuery(userQuery);
+  const { user } = data;
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isPageLoading = navigation.state === 'loading';
@@ -81,12 +84,12 @@ const DashboardLayout = ({ queryClient }) => {
     >
       <Wrapper>
         <main className='dashboard'>
-          <SmallSidebar />
-          <BigSidebar />
+          <SmallSideBar />
+          <BigSideBar />
           <div>
-            <Navbar />
+            <NavBar />
             <div className='dashboard-page'>
-              {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
+              {isPageLoading ? <Load /> : <Outlet context={{ user }} />}
             </div>
           </div>
         </main>
