@@ -16,6 +16,9 @@ const router = Router()
 //APPROACH 2
 // chaining the methods as they use same url : base param
 router.route('/').get(getAllJobs).post(validateJobInput,createJob)
+
+router.route('/stats').get(showStats);
+
 // for rest of the edit, del... : route param 
 router.route('/:id').get(validateIdParam , getJob).patch(validateIdParam , validateJobInput, updateJob).delete(validateIdParam, deleteJob)
 

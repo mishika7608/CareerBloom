@@ -1,6 +1,8 @@
 import Job from '../models/JobModel.js';
 import {StatusCodes} from 'http-status-codes'
 import { nanoid } from 'nanoid';
+import mongoose from 'mongoose';
+import day from 'dayjs';
 
 let jobs=[
     {id:nanoid(),company:'apple',position:'front-end'}
@@ -13,7 +15,7 @@ export const getAllJobs = async(req, res) => {
     res.status(StatusCodes.OK).json({ jobs })
 }
 
-export  const createJob = async(req, res) => {
+export const createJob = async(req, res) => {
     req.body.createdBy = req.user.userId
     const job = await Job.create(req.body);
     res.status(StatusCodes.CREATED).json({ job });
@@ -90,3 +92,6 @@ export const deleteJob =  async(req, res) => {
 
 
 
+export const showStats = async(req,res) => {
+    res.send('stats')
+}
