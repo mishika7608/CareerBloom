@@ -1,4 +1,4 @@
-import Job from '../models/JobModel.js';
+import Job from '../models/JobModel.js';  //imports jobs collection mongoDB
 import {StatusCodes} from 'http-status-codes'
 import { nanoid } from 'nanoid';
 import mongoose from 'mongoose';
@@ -8,17 +8,69 @@ let jobs=[
     {id:nanoid(),company:'apple',position:'front-end'}
 ];
 
-export const getAllJobs = async(req, res) => {
-    // const jobs = await Job.find({company:'apple'})      //Specific company
-    console.log(req.user);
-    const jobs = await Job.find({createdBy:req.user.userId})
-    res.status(StatusCodes.OK).json({ jobs })
-}
+export const getAllJobs = async (req, res) => {
+  const { search, jobStatus, jobType, sort } = req.query; //destructures the query recieved into these parameters
+
+  const queryObject = {
+    createdBy: req.user.userId,
+  }; //a filter that shows jobs created by logged in user
+
+  if (search) {
+    queryObject.$or = [
+      { position: { $regex: search, $options: 'i' } },
+      { company: { $regex: search, $options: 'i' } },
+    ];
+  }
+
+  if (jobStatus && jobStatus !== 'all') {
+    queryObject.jobStatus = jobStatus;
+  }
+  if (jobType && jobType !== 'all') {
+    queryObject.jobType = jobType;
+  } //filtering on job status and type and no filter if its all
+
+  const sortOptions = {
+    newest: '-createdAt', //descending(new first)
+    oldest: 'createdAt', //ascending(old first)
+    'a-z': 'position',
+    'z-a': '-position',
+  }; //defines sorting rules
+
+  const sortKey = sortOptions[sort] || sortOptions.newest; //filtering acc to user or default->newest
+
+  // setup pagination
+
+  const page = Number(req.query.page) || 1; //current page no. 
+  const limit = Number(req.query.limit) || 10; //no of res per page
+  const skip = (page - 1) * limit;
+
+  //MongoDB query filters acc to us
+  const jobs = await Job.find(queryObject)
+    .sort(sortKey)
+    .skip(skip)
+    .limit(limit);
+
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalJobs / limit);
+  res
+    .status(StatusCodes.OK)
+    .json({ totalJobs, numOfPages, currentPage: page, jobs });
+}; //sends jobs and pagination as JSON response
+
+
+// export const getAllJobs = async(req, res) => {
+//     // const jobs = await Job.find({company:'apple'})      //Specific company
+//     console.log(req.query);
+//     const jobs = await Job.find({createdBy:req.user.userId,
+//         position:req.query.search,
+//     })
+//     res.status(StatusCodes.OK).json({ jobs })
+// }
 
 export const createJob = async(req, res) => {
-    req.body.createdBy = req.user.userId
-    const job = await Job.create(req.body);
-    res.status(StatusCodes.CREATED).json({ job });
+    req.body.createdBy = req.user.userId; //attaches id to new job
+    const job = await Job.create(req.body); //creates new job document in mongoDB
+    res.status(StatusCodes.CREATED).json({ job }); //201 status return for creation
 
     //CATCH ASYNC ERRROR 
     // try{
@@ -93,5 +145,57 @@ export const deleteJob =  async(req, res) => {
 
 
 export const showStats = async(req,res) => {
-    res.send('stats')
+
+    let stats = await Job.aggregate([ //count jobs for each status
+        {$match:{createdBy:new mongoose.Types.ObjectId(req.user.userId)}}, //filter jobs created by logged in user
+        {$group:{_id:'$jobStatus',count: {$sum:1}}}, //groups and count them
+    ]) 
+
+    stats = stats.reduce((acc,curr) => {
+        const {_id:title,count}=curr;
+        acc[title] = count;
+        return acc;
+    },{});
+    //[ { _id: 'pending', count: 3 }, { _id: 'interview', count: 2 } ]
+    //{ pending: 3, interview: 2 }
+
+
+    const defaultStats = {
+        pending:stats.pending || 0,
+        interview:stats.interview || 0,
+        declined:stats.declined || 0,
+    }
+    //Groups jobs by month and year of creation.Counts how many jobs were created each month. Sorts by most recent months first.Limits to the last 6 months.
+    let monthlyApplications = await Job.aggregate([
+        {$match:{createdBy:new mongoose.Types.ObjectId(req.user.userId)}},
+        {$group:{
+            _id:{year:{$year:'$createdAt'},month:{$month:
+        '$createdAt' }},
+        count:{$sum: 1}
+        },
+    },
+    {$sort:{'_id.year':-1,'_id.month':-1}},
+    {$limit:6},
+    ]) 
+
+    monthlyApplications = monthlyApplications.map((item) => {
+        const {_id:{year,month},count,} = item;
+        const date = day().month(month -1).year(year).format('MMM YY');
+
+        return {date,count}
+    })
+    .reverse();
+
+    const  mockData = [{
+        date:'May 23',
+        count: 12,
+    },{
+        date:'June 23',
+        count: 9,
+    },{
+        date:'June 23',
+        count: 2,
+    }
+    ]
+    res.status(StatusCodes.OK).json({defaultStats, monthlyApplications: mockData});
 }

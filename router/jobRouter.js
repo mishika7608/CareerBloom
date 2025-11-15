@@ -4,7 +4,8 @@ import {
     getJob,
     createJob,
     updateJob,
-    deleteJob, } 
+    deleteJob, 
+    showStats,} 
     from '../controllers/jobController.js'
 import { validateIdParam , validateJobInput } from '../middleware/validationMiddleware.js'
 
